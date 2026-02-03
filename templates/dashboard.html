@@ -1,0 +1,144 @@
+{% extends 'home.html' %}
+{% block content %}
+
+<style>
+    .dash-card {
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(15px);
+        border-radius: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    .table-aesthetic {
+        border-collapse: separate;
+        border-spacing: 0 15px;
+    }
+
+    .table-aesthetic tr {
+        background: white;
+        border-radius: 20px;
+        transition: 0.3s;
+    }
+
+    .table-aesthetic td {
+        padding: 20px;
+        border: none;
+        vertical-align: middle;
+    }
+
+    .table-aesthetic tr:hover {
+        transform: scale(1.01);
+        box-shadow: 0 5px 15px rgba(255, 143, 163, 0.2);
+    }
+
+    .admin-header {
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        color: #4a192c;
+    }
+</style>
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h1 class="admin-header">Owner Dashboard</h1>
+
+        <button class="btn btn-dreamy" data-bs-toggle="modal" data-bs-target="#addSareeModal">
+            <i class="bi bi-plus-lg"></i> Add New Saree
+        </button>
+    </div>
+
+    <div class="dash-card">
+        <h5 class="mb-4 fw-bold">Current Inventory</h5>
+
+        <div class="table-responsive">
+            <table class="table table-aesthetic">
+                <thead>
+                    <tr style="background: transparent;">
+                        <th>Product</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Fabric</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for s in sarees %}
+                    <tr>
+                        <td>
+                            <img src="{{ s.image.url }}"
+                                 style="width:60px;height:60px;border-radius:15px;object-fit:cover;">
+                        </td>
+
+                        <td class="fw-bold">{{ s.name }}</td>
+
+                        <td style="color:#ff8fa3;">
+                            ₹{{ s.price }}
+                        </td>
+
+                        <td>{{ s.fabric }}</td>
+
+                        <td>
+                            <a href="{% url 'edit_saree' s.id %}"
+                               class="btn btn-sm btn-outline-info rounded-pill px-3 me-2">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+
+                            <a href="{% url 'delete_saree' s.id %}"
+                               class="btn btn-sm btn-outline-danger rounded-pill px-3">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addSareeModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content dash-card" style="border-radius:40px;">
+
+            <div class="modal-header border-0">
+                <h5 class="modal-title fw-bold">Upload New Collection</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <form method="POST" enctype="multipart/form-data" action="">
+                {% csrf_token %}
+
+                <div class="modal-body">
+                    <input type="text" name="name"
+                           class="form-control mb-3 rounded-pill"
+                           placeholder="Saree Name" required>
+
+                    <input type="number" name="price"
+                           class="form-control mb-3 rounded-pill"
+                           placeholder="Price (₹)" required>
+
+                    <input type="text" name="fabric"
+                           class="form-control mb-3 rounded-pill"
+                           placeholder="Fabric (e.g. Silk)">
+
+                    <input type="file" name="image"
+                           class="form-control mb-3 rounded-pill" required>
+                </div>
+
+                <div class="modal-footer border-0">
+                    <button type="submit" class="btn btn-dreamy w-100">
+                        Post to Website
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

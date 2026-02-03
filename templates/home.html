@@ -1,0 +1,200 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saritha Sarees | Dreamy Ethnic Boutique</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Quicksand:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        :root {
+            --dream-pink: #fff0f3;
+            --rose-petal: #ffccd5;
+            --deep-plum: #4a192c;
+            --glass-white: rgba(255, 255, 255, 0.4);
+        }
+
+        body { 
+            font-family: 'Quicksand', sans-serif; 
+            background: linear-gradient(-45deg, #fff0f3, #f8bbd0, #e1bee7, #fff5f8);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--deep-plum);
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .navbar { 
+            background: rgba(255, 255, 255, 0.2) !important; 
+            backdrop-filter: blur(15px); 
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+        .navbar-brand { 
+            font-family: 'Playfair Display', serif; 
+            font-weight: 700; font-size: 2rem;
+            color: var(--deep-plum) !important;
+            letter-spacing: 2px;
+        }
+
+        .floating-orb {
+            position: absolute;
+            width: 150px; height: 150px;
+            background: radial-gradient(circle, var(--rose-petal), transparent);
+            filter: blur(40px);
+            z-index: -1;
+            border-radius: 50%;
+            animation: float 10s infinite alternate;
+        }
+
+        @keyframes float {
+            from { transform: translate(0, 0); }
+            to { transform: translate(100px, 100px); }
+        }
+
+        .saree-card { 
+            border: none; 
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 40px;
+            padding: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-bottom: 40px;
+            animation: cardFloat 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes cardFloat {
+            from { transform: translateY(0); }
+            to { transform: translateY(-15px); }
+        }
+
+        .saree-card:hover {
+            transform: scale(1.05) rotate(2deg);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .img-wrapper { 
+            border-radius: 30px;
+            overflow: hidden;
+            height: 420px;
+            position: relative;
+        }
+
+        .img-wrapper img { 
+            width: 100%; height: 100%; 
+            object-fit: cover; 
+            transition: transform 1.5s ease;
+        }
+        .saree-card:hover img {
+            transform: scale(1.1) translateY(-10px);
+        }
+
+        .saree-name { 
+            font-family: 'Playfair Display', serif;
+            font-weight: 700; font-size: 1.2rem;
+            margin-top: 15px;
+        }
+        .price-tag { 
+            font-weight: 700; color: #ff8fa3; font-size: 1.1rem;
+        }
+
+        .btn-dreamy {
+            background: linear-gradient(45deg, #ff8fa3, #ffccd5);
+            border: none; color: white;
+            border-radius: 50px;
+            padding: 10px 25px;
+            font-weight: 700;
+            box-shadow: 0 10px 20px rgba(255, 143, 163, 0.3);
+            transition: 0.3s;
+        }
+        .btn-dreamy:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(255, 143, 163, 0.5);
+            color: white;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="floating-orb" style="top: 10%; left: 5%;"></div>
+<div class="floating-orb" style="top: 60%; right: 10%; width: 200px; height: 200px;"></div>
+
+<nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container d-flex justify-content-between">
+        <a class="navbar-brand" href="{% url 'home' %}">saritha.</a>
+        
+        <div class="d-flex gap-4 align-items-center">
+            <a href="{% url 'home' %}" class="text-dark text-decoration-none fw-bold small">COLLECTIONS</a>
+            <a href="{% url 'about' %}" class="text-dark text-decoration-none fw-bold small">ABOUT</a>
+            <a href="{% url 'faq' %}" class="text-dark text-decoration-none fw-bold small">ASSISTANCE</a>
+            
+            {% if user.is_authenticated %}
+                {% if user.is_staff %}
+                    <a href="{% url 'admin_dashboard' %}" class="text-dark text-decoration-none fw-bold small">DASHBOARD</a>
+                {% else %}
+                    <a href="{% url 'my_orders' %}" class="text-dark text-decoration-none fw-bold small">MY ORDERS</a>
+                {% endif %}
+                <a href="{% url 'logout' %}" class="btn btn-sm btn-outline-danger rounded-pill px-3">Logout</a>
+            {% else %}
+                <a href="{% url 'user_login' %}" class="btn btn-sm btn-outline-primary rounded-pill px-3">Login / Register</a>
+            {% endif %}
+            
+            <a href="{% url 'cart' %}" class="text-dark"><i class="bi bi-bag-heart-fill fs-4"></i></a>
+        </div>
+    </div>
+</nav>
+
+{% block content %}
+<div class="container text-center py-5">
+    <h1 class="hero-title mt-5">Flowing Silks.</h1>
+    <p class="text-uppercase small mb-5" style="letter-spacing: 5px;">Aesthetics of Indian Heritage</p>
+
+    <div class="row g-5 mt-4">
+        {% for s in sarees %}
+        <div class="col-12 col-md-4">
+            <div class="card saree-card">
+                <div class="img-wrapper">
+                    <div style="position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.8); padding: 5px 15px; border-radius: 50px; font-size: 0.7rem; font-weight: 800; z-index: 10;">
+                        TRENDING 🔥
+                    </div>
+                    <img src="{{ s.image.url }}" alt="{{ s.name }}">
+                </div>
+                <div class="card-body">
+                    <h5 class="saree-name">{{ s.name }}</h5>
+                    <p class="price-tag">₹{{ s.price }}</p>
+                    <a href="{% url 'saree_detail' s.id %}" class="btn btn-dreamy w-100">Drape This Story</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+<footer class="py-5 text-center">
+    <div class="container-fluid py-4 mb-4" style="background: rgba(255,255,255,0.3); backdrop-filter: blur(10px);">
+        <h2 class="fw-bold" style="font-family: 'Playfair Display';">100% Handloom Authenticity</h2>
+        <p class="text-muted italic">Every weave tells a tale of ancient artistry.</p>
+    </div>
+    <p class="small text-muted mb-0">© SARITHA BOUTIQUE | MADE WITH LOVE</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

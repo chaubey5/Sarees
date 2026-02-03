@@ -1,0 +1,30 @@
+{% extends 'home.html' %}
+{% block content %}
+<div class="container py-5 mt-5">
+    <div class="mx-auto" style="max-width: 450px; background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(20px); border-radius: 40px; padding: 40px; border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 20px 50px rgba(0,0,0,0.05);">
+        <div class="text-center mb-4">
+            <h2 style="font-family: 'Playfair Display'; font-weight: 700; color: #4a192c;">Register</h2>
+            <p class="small text-muted">Join Saritha Boutique</p>
+        </div>
+        {% if error %}
+        <div class="alert alert-danger small rounded-pill text-center">{{ error }}</div>
+        {% endif %}
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <input type="text" name="username" class="form-control rounded-pill border-0 py-3 px-4 shadow-sm" placeholder="Username" required>
+            </div>
+            <div class="mb-3">
+                <input type="email" name="email" class="form-control rounded-pill border-0 py-3 px-4 shadow-sm" placeholder="Email" required>
+            </div>
+            <div class="mb-4">
+                <input type="password" name="password" class="form-control rounded-pill border-0 py-3 px-4 shadow-sm" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn btn-dreamy w-100 py-3 rounded-pill">Sign Up</button>
+        </form>
+        <div class="text-center mt-4">
+            <p class="small">Already have an account? <a href="{% url 'user_login' %}" class="text-decoration-none fw-bold" style="color: #ff8fa3;">Login</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

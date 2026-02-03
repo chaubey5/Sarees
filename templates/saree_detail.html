@@ -1,0 +1,44 @@
+{% extends 'home.html' %}
+{% block content %}
+<div class="container py-5 mt-5">
+    <div class="row g-5">
+        <div class="col-md-6">
+            <div class="shadow-lg p-2 bg-white overflow-hidden">
+                <img src="{{ saree.image.url }}" class="img-fluid w-100 transition-zoom" style="max-height: 650px; object-fit: cover;">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb small text-uppercase">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-dark">Home</a></li>
+                    <li class="breadcrumb-item active">{{ saree.category.name }}</li>
+                </ol>
+            </nav>
+            <h1 class="display-4 fw-bold mb-3" style="font-family: 'Playfair Display'; color: var(--deep-maroon);">{{ saree.name }}</h1>
+            <p class="text-muted fs-5 italic mb-4">{{ saree.fabric }} Artisan Work</p>
+            
+            <h2 class="mb-4">₹{{ saree.price }}</h2>
+            
+            <div class="py-4 border-top border-bottom mb-4">
+                <h6 class="fw-bold text-uppercase small">Description</h6>
+                <p class="text-secondary lh-lg mb-0">{{ saree.description }}</p>
+            </div>
+
+            <div class="d-grid gap-3 d-md-flex">
+                <a href="{% url 'add_to_cart' saree.id %}" class="btn btn-dark btn-lg rounded-0 px-5 py-3 fs-6">ADD TO BAG</a>
+                <a href="{% url 'checkout' saree.id %}" class="btn btn-outline-dark btn-lg rounded-0 px-5 py-3 fs-6">BUY IT NOW</a>
+            </div>
+            
+            <div class="mt-5 p-3 bg-light border-start border-4 border-dark">
+                <p class="small mb-0">✨ <strong>Free Shipping</strong> on all orders above ₹1999.</p>
+                <p class="small mb-0">🌿 100% Authentic Handloom Product.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .transition-zoom { transition: transform 0.5s ease; cursor: zoom-in; }
+    .transition-zoom:hover { transform: scale(1.1); }
+</style>
+{% endblock %}

@@ -1,0 +1,193 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    :root {
+        --dream-pink: #fff0f3;
+        --rose-petal: #ffccd5;
+        --deep-plum: #4a192c;
+        --glass-white: rgba(255, 255, 255, 0.5);
+    }
+
+    /* Container setup for aesthetic look */
+    .cart-wrapper {
+        min-height: 80vh;
+        padding-top: 50px;
+        padding-bottom: 100px;
+    }
+
+    .cart-header {
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        color: var(--deep-plum);
+        margin-bottom: 40px;
+        text-align: center;
+        letter-spacing: 2px;
+    }
+
+    /* Glassmorphism Card for Items */
+    .cart-item-glass {
+        background: var(--glass-white);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 30px;
+        padding: 25px;
+        box-shadow: 0 15px 35px rgba(136, 14, 79, 0.05);
+        transition: 0.4s ease;
+        display: flex;
+        align-items: center;
+        animation: cardFloat 4s ease-in-out infinite alternate;
+    }
+
+    .cart-item-glass:hover {
+        background: rgba(255, 255, 255, 0.8);
+        transform: scale(1.02);
+    }
+
+    .cart-img-wrapper {
+        width: 150px;
+        height: 200px;
+        border-radius: 20px;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+
+    .cart-img-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Summary Sidebar Glass */
+    .summary-glass {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-radius: 40px;
+        padding: 35px;
+        position: sticky;
+        top: 100px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+    }
+
+    /* Button Styling */
+    .btn-checkout-dreamy {
+        background: linear-gradient(45deg, #ff8fa3, #ffccd5);
+        border: none;
+        color: white;
+        border-radius: 50px;
+        padding: 15px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        transition: 0.3s;
+        box-shadow: 0 10px 20px rgba(255, 143, 163, 0.3);
+    }
+
+    .btn-checkout-dreamy:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(255, 143, 163, 0.5);
+        color: white;
+    }
+
+    .remove-btn {
+        color: #ff5c8a;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+        transition: 0.3s;
+    }
+
+    .remove-btn:hover {
+        color: var(--deep-plum);
+    }
+
+    /* Floating Animation matching Home */
+    @keyframes cardFloat {
+        from { transform: translateY(0); }
+        to { transform: translateY(-10px); }
+    }
+
+    .empty-cart-aesthetic {
+        text-align: center;
+        padding: 100px 20px;
+    }
+</style>
+
+<div class="container cart-wrapper">
+    <h2 class="cart-header">Your Dream Bag</h2>
+
+    {% if saree %}
+    <div class="row g-5">
+        <div class="col-lg-8">
+            <div class="cart-item-glass mb-4">
+                <div class="cart-img-wrapper">
+                    <img src="{{ saree.image.url }}" alt="{{ saree.name }}">
+                </div>
+                <div class="ms-4 flex-grow-1">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h4 class="fw-bold mb-1" style="font-family: 'Playfair Display';">{{ saree.name }}</h4>
+                            <p class="text-muted small mb-3">Pure {{ saree.fabric }} Artisan Weave</p>
+                        </div>
+                        <a href="{% url 'remove_item' %}" class="remove-btn">
+                            <i class="bi bi-x-circle-fill"></i> REMOVE
+                        </a>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-end mt-4">
+                        <h3 class="fw-bold mb-0" style="color: #ff8fa3;">₹{{ saree.price }}</h3>
+                        <div class="text-muted small">Quantity: 1</div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="{% url 'home' %}" class="text-decoration-none fw-bold" style="color: var(--deep-plum);">
+                <i class="bi bi-arrow-left"></i> Back to Collections
+            </a>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="summary-glass">
+                <h5 class="fw-bold mb-4" style="letter-spacing: 1px;">ORDER SUMMARY</h5>
+                
+                <div class="d-flex justify-content-between mb-3">
+                    <span class="text-muted">Bag Total</span>
+                    <span class="fw-bold">₹{{ saree.price }}</span>
+                </div>
+                
+                <div class="d-flex justify-content-between mb-3 text-success">
+                    <span class="small">Shipping Charge</span>
+                    <span class="fw-bold">COMPLIMENTARY</span>
+                </div>
+                
+                <hr style="border-color: rgba(0,0,0,0.1);">
+                
+                <div class="d-flex justify-content-between align-items-center mb-5">
+                    <span class="h5 fw-bold mb-0">Total</span>
+                    <span class="h3 fw-bold mb-0" style="color: var(--deep-plum);">₹{{ saree.price }}</span>
+                </div>
+
+                <a href="{% url 'checkout' saree.id %}" class="btn btn-checkout-dreamy w-100">
+                    Secure Checkout <i class="bi bi-arrow-right-short"></i>
+                </a>
+
+                <div class="text-center mt-4">
+                    <p class="small text-muted mb-0">
+                        <i class="bi bi-shield-lock-fill"></i> Secure & Protected Payment
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="empty-cart-aesthetic">
+        <div class="mb-4" style="font-size: 5rem; animation: cardFloat 3s infinite alternate;">🛒</div>
+        <h2 class="fw-bold" style="font-family: 'Playfair Display';">Your bag is weightless...</h2>
+        <p class="text-muted mb-5">It seems you haven't found your perfect drape yet.</p>
+        <a href="{% url 'home' %}" class="btn btn-dreamy px-5 py-3">Explore the Edit</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

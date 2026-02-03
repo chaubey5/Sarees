@@ -1,0 +1,42 @@
+{% extends 'home.html' %}
+{% block content %}
+
+<div class="container py-5" style="margin-top: 50px;">
+    <div class="mx-auto" style="max-width: 500px; background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(15px); border-radius: 40px; padding: 40px; border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 20px 40px rgba(0,0,0,0.05);">
+        
+        <div class="text-center mb-4">
+            <h2 style="font-family: 'Playfair Display', serif; font-weight: 700; color: #4a192c;">Edit Detail</h2>
+            <p class="small text-muted text-uppercase" style="letter-spacing: 2px;">Update your collection</p>
+        </div>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label class="small fw-bold mb-2 ms-2">Saree Name</label>
+                <input type="text" name="name" class="form-control rounded-pill px-4" value="{{ saree.name }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="small fw-bold mb-2 ms-2">Price (₹)</label>
+                <input type="number" name="price" class="form-control rounded-pill px-4" value="{{ saree.price }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="small fw-bold mb-2 ms-2">Fabric</label>
+                <input type="text" name="fabric" class="form-control rounded-pill px-4" value="{{ saree.fabric }}">
+            </div>
+
+            <div class="mb-4">
+                <label class="small fw-bold mb-2 ms-2">Change Image (Optional)</label>
+                <input type="file" name="image" class="form-control rounded-pill px-4">
+                <p class="text-center mt-2 small text-muted">Current: {{ saree.image.name }}</p>
+            </div>
+
+            <button type="submit" class="btn btn-dreamy w-100 py-3 mb-3">Save Changes</button>
+            <a href="{% url 'admin_dashboard' %}" class="d-block text-center text-decoration-none text-muted small">Cancel and Go Back</a>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

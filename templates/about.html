@@ -1,0 +1,57 @@
+{% extends 'home.html' %}
+{% block content %}
+<style>
+    .about-glass {
+        background: rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(15px);
+        border-radius: 50px;
+        padding: 60px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        margin-top: 50px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+        animation: cardFloat 5s ease-in-out infinite alternate;
+    }
+
+    .about-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 3.5rem;
+        color: #4a192c;
+        margin-bottom: 30px;
+    }
+
+    .story-text {
+        font-size: 1.2rem;
+        line-height: 1.8;
+        color: #6d5d6e;
+        max-width: 800px;
+        margin: auto;
+    }
+
+    .signature {
+        font-family: 'Playfair Display', serif;
+        font-style: italic;
+        font-size: 1.5rem;
+        color: #ff8fa3;
+        margin-top: 30px;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="about-glass text-center">
+        <span class="badge rounded-pill mb-3" style="background: #ffccd5; color: #4a192c; padding: 8px 20px;">OUR HERITAGE</span>
+        <h1 class="about-title">Saritha Sarees</h1>
+        <p class="story-text">
+            1995 se humne shuru kiya ek sapna—Bharat ke har kone se sabse khoobsurat aur asli handloom sarees ko ek chhat ke niche laane ka. Hamari har saree sirf ek kapda nahi, balki ek weaver ki mehnat aur ek aurat ki shaan hai.
+        </p>
+        <div class="my-5">
+            <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=1000" 
+                 style="width: 100%; max-width: 700px; border-radius: 30px; box-shadow: 0 15px 30px rgba(0,0,0,0.1);">
+        </div>
+        <p class="story-text">
+            Hum believe karte hain ki fashion temporary hai, par "Grace" hamesha rehti hai. Hamari collection khas taur par unke liye hai jo elegance aur quality se samjhauta nahi karte.
+        </p>
+        <div class="signature">Draped in Elegance, Since 1995</div>
+        <a href="{% url 'home' %}" class="btn btn-dreamy mt-5 px-5 py-3">Explore Collection</a>
+    </div>
+</div>
+{% endblock %}

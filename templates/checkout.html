@@ -1,0 +1,38 @@
+{% extends 'home.html' %}
+{% block content %}
+<div class="container py-5 mt-5">
+    <div class="row g-5">
+        <div class="col-lg-7">
+            <h4 class="fw-bold mb-4" style="font-family: 'Playfair Display';">Shipping Information</h4>
+            <form method="POST" class="mt-4">
+                {% csrf_token %}
+                <div class="row g-3">
+                    <div class="col-md-6"><label class="small fw-bold">FIRST NAME</label><input type="text" class="form-control rounded-0" required></div>
+                    <div class="col-md-6"><label class="small fw-bold">LAST NAME</label><input type="text" class="form-control rounded-0" required></div>
+                    <div class="col-12"><label class="small fw-bold">ADDRESS</label><textarea class="form-control rounded-0" rows="3" required></textarea></div>
+                    <div class="col-md-6"><label class="small fw-bold">PHONE</label><input type="tel" class="form-control rounded-0" required></div>
+                </div>
+                <h4 class="fw-bold mt-5 mb-3" style="font-family: 'Playfair Display';">Payment Method</h4>
+                <div class="p-3 border mb-4">
+                    <input class="form-check-input" type="radio" checked> <label class="fw-bold ms-2">Cash on Delivery (COD)</label>
+                </div>
+                <button type="submit" class="btn btn-dark w-100 py-3 rounded-0 fw-bold">PLACE ORDER NOW</button>
+            </form>
+        </div>
+        <div class="col-lg-5">
+            <div class="p-4 border bg-light">
+                <h5 class="fw-bold mb-4">YOUR ORDER</h5>
+                <div class="d-flex align-items-center mb-3">
+                    <img src="{{ saree.image.url }}" style="width: 80px; height: 100px; object-fit: cover;">
+                    <div class="ms-3">
+                        <h6 class="fw-bold mb-0">{{ saree.name }}</h6>
+                        <p class="fw-bold">₹{{ saree.price }}</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between h5 fw-bold"><span>Total</span><span>₹{{ saree.price }}</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
